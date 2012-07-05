@@ -1,0 +1,3 @@
+
+path-constant BOOST : /home/ghost/Work/Boost/boost-svn ;
+constant TOKEN : your-api-token ;

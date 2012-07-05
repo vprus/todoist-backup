@@ -1,0 +1,9 @@
+
+use-project /boost : $(BOOST) ;
+
+searched-lib ssl ;
+
+exe todoist_backup : todoist_backup.cpp urdl.cpp /boost//system ssl 
+    : <include>. <threading>multi <define>TOKEN=\\\"$(TOKEN)\\\"
+      <define>BOOST_SPIRIT_USE_OLD_NAMESPACE=1
+    ;
