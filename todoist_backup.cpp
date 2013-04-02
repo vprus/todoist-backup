@@ -46,9 +46,9 @@ int main(int argc, char* argv[])
         cout << "Reading project list...";
 
         string projects = get("http://todoist.com/API/getProjects?token=" TOKEN);
-        result += "projects: ";
+        result += "{\n";
+        result += "\"projects\": ";
         result += projects;
-        result += "\n";
 
         json::grammar<char>::variant v
             = json::parse(projects.begin(), projects.end());
@@ -88,14 +88,16 @@ int main(int argc, char* argv[])
             assert(p.count("id"));
             int id = any_cast<int>(*p["id"]);
 
+            result += ",\n";
+
             string items = get((format(
                                     "http://todoist.com/API/getUncompletedItems?project_id=%1%&token=%2%") % id % TOKEN).str());
-            result += (format("%1%: ") % id).str();
+            result += (format("\"%1%\": ") % id).str();
             result += items;
-            result += "\n";
 
             progress += 1;
-        }        
+        }
+        result += "\n}\n";
 
         ofstream out("todoist.txt");
         out << result;
